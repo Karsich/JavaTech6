@@ -13,8 +13,8 @@ import java.io.File;
 import java.io.IOException;
 
 import static com.web.files.Service.CookieService.GetCookie;
-import static com.web.files.Service.DBService.createUser;
-import static com.web.files.Service.DBService.isUserExist;
+import static com.web.files.Service.DBService.save;
+import static com.web.files.Service.DBService.isExist;
 
 @WebServlet(urlPatterns = {"/reg"})
 public class UserServlet extends HttpServlet {
@@ -44,7 +44,7 @@ public class UserServlet extends HttpServlet {
         }
 
         UserProfile profile = new UserProfile(login, pass, email);
-        if (!isUserExist(login,pass)) {
+        if (!isExist(login,pass)) {
 
             // Создание новой папки для пользователя
             File folder = new File("C:\\JavaTechDB",login);
@@ -56,7 +56,7 @@ public class UserServlet extends HttpServlet {
                 return;
             }
 
-            createUser(profile);
+            save(profile);
 
             String currentURL = request.getRequestURL().toString();
             response.sendRedirect(currentURL.substring(0, currentURL.lastIndexOf("/")) + "/auth");

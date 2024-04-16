@@ -5,7 +5,7 @@ import com.web.files.Model.UserProfile;
 import java.sql.*;
 
 public class DBService {
-    public static boolean isUserExist(String login, String password) {
+    public static boolean isExist(String login, String password) {
         try (Connection connection = getMysqlConnection()) {
             String query = "SELECT * FROM users WHERE login = ? AND password = ?;";
             PreparedStatement statement = connection.prepareStatement(query);
@@ -18,7 +18,7 @@ public class DBService {
         }
         return false;
     }
-    public static void createUser(UserProfile profile) {
+    public static void save(UserProfile profile) {
         try (Connection connection = getMysqlConnection()) {
             String query = "INSERT INTO users (login, password, email) VALUES (?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
